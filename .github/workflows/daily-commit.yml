@@ -1,0 +1,35 @@
+name: Daily Automated Commit - 22f3000565@ds.study.iitm.ac.in
+
+on:
+  schedule:
+    # Run every day at 09:30 UTC (must use specific hours/minutes, not wildcards)
+    - cron: '30 09 * * *'
+  workflow_dispatch:  # Allow manual trigger for testing
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Configure Git
+        run: |
+          git config user.name "DevSync Automation"
+          git config user.email "22f3000565@ds.study.iitm.ac.in"
+      
+      - name: Create daily update commit - 22f3000565@ds.study.iitm.ac.in
+        run: |
+          # Create or update a timestamp file
+          echo "Last automated update: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > .github/DAILY_UPDATE.txt
+          
+          # Add the file to git
+          git add .github/DAILY_UPDATE.txt
+          
+          # Create commit
+          git commit -m "Automated daily commit by DevSync automation - 22f3000565@ds.study.iitm.ac.in"
+      
+      - name: Push changes
+        run: |
+          git push
